@@ -44,6 +44,7 @@ void ACTFPlayerState::AddToScore(float ScoreAmount)
 			CTFController->UpdatePlayerScore(GetScore());
 		}
 	}
+	OnRep_Score();
 }
 
 void ACTFPlayerState::OnRep_Score()
@@ -73,6 +74,7 @@ void ACTFPlayerState::AddToDefeats(int32 DefeatsAmount)
 			CTFController->UpdatePlayerDefeats(Defeats);
 		}
 	}
+	OnRep_Defeats();
 }
 
 void ACTFPlayerState::OnRep_Defeats()
@@ -93,12 +95,30 @@ void ACTFPlayerState::OnRep_Defeats()
 void ACTFPlayerState::AddToFlagScore(int32 FlagScoreAmount)
 {
 	FlagScore += FlagScoreAmount;
+	CTFCharacter = CTFCharacter == nullptr ? Cast<ACTFCharacter>(GetPawn()) : CTFCharacter;
+	if (CTFCharacter)
+	{
+		CTFController = CTFController == nullptr ? Cast<ACTFPlayerController>(CTFCharacter->Controller) : CTFController;
+		if (CTFController)
+		{
+			CTFController->UpdateFlagScore(FlagScore);
+		}
+	}
 	OnRep_FlagScore(); // Atualizar HUD imediatamente
 }
 
 void ACTFPlayerState::AddToEnemyFlagScore(int32 EnemyFlagScoreAmount)
 {
 	EnemyFlagScore += EnemyFlagScoreAmount;
+	CTFCharacter = CTFCharacter == nullptr ? Cast<ACTFCharacter>(GetPawn()) : CTFCharacter;
+	if (CTFCharacter)
+	{
+		CTFController = CTFController == nullptr ? Cast<ACTFPlayerController>(CTFCharacter->Controller) : CTFController;
+		if (CTFController)
+		{
+			CTFController->UpdateEnemyFlagScore(EnemyFlagScore);
+		}
+	}
 	OnRep_EnemyFlagScore(); // Atualizar HUD imediatamente
 }
 

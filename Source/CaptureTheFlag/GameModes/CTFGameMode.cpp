@@ -14,19 +14,19 @@
 
 class AGameState;
 
-ACTFGameModeBase::ACTFGameModeBase(): Flag(nullptr), WDNPlayerController(nullptr)
+ACTFGameMode::ACTFGameMode(): Flag(nullptr), WDNPlayerController(nullptr)
 {
 	bReplicates = true;
 }
 
-void ACTFGameModeBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void ACTFGameMode::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ACTFGameModeBase, Flag);
+	DOREPLIFETIME(ACTFGameMode, Flag);
 }
 
-void ACTFGameModeBase::OnPostLogin(AController* NewPlayer)
+void ACTFGameMode::OnPostLogin(AController* NewPlayer)
 {
 	Super::OnPostLogin(NewPlayer);
 	
@@ -37,7 +37,7 @@ void ACTFGameModeBase::OnPostLogin(AController* NewPlayer)
 	SetupSpawnPoints();
 }
 
-void ACTFGameModeBase::HandleTeamSelection(AController* PlayerController, int32 TeamID)
+void ACTFGameMode::HandleTeamSelection(AController* PlayerController, int32 TeamID)
 {
 	if (ACTFPlayerController* PC = Cast<ACTFPlayerController>(PlayerController))
 	{
@@ -81,7 +81,7 @@ void ACTFGameModeBase::HandleTeamSelection(AController* PlayerController, int32 
 	}
 }
 
-void ACTFGameModeBase::SetupSpawnPoints()
+void ACTFGameMode::SetupSpawnPoints()
 {
 	// Clear existing spawn points
 	Team1SpawnPoints.Empty();
@@ -134,7 +134,7 @@ void ACTFGameModeBase::SetupSpawnPoints()
 	}
 }
 
-void ACTFGameModeBase::RespawnFlag()
+void ACTFGameMode::RespawnFlag()
 {
 	if(Flag)
 	{
@@ -153,7 +153,7 @@ void ACTFGameModeBase::RespawnFlag()
 	}
 }
 
-void ACTFGameModeBase::PlayerEliminated(ACTFCharacter* ElimmedCharacter, ACTFPlayerController* VictimController,
+void ACTFGameMode::PlayerEliminated(ACTFCharacter* ElimmedCharacter, ACTFPlayerController* VictimController,
                                        ACTFPlayerController* AttackerController)
 {
 	if (AttackerController == nullptr || AttackerController->PlayerState == nullptr) return;
@@ -172,7 +172,7 @@ void ACTFGameModeBase::PlayerEliminated(ACTFCharacter* ElimmedCharacter, ACTFPla
 	RequestRespawn(ElimmedCharacter, VictimController);
 }
 
-void ACTFGameModeBase::RequestRespawn(ACharacter* ElimmedCharacter, AController* ElimmedController)
+void ACTFGameMode::RequestRespawn(ACharacter* ElimmedCharacter, AController* ElimmedController)
 {
 	// Should handle respawning character here using the SpawnArea for its team.
 
@@ -225,7 +225,7 @@ void ACTFGameModeBase::RequestRespawn(ACharacter* ElimmedCharacter, AController*
 	}
 }
 
-void ACTFGameModeBase::OnTeamScored(ACTFCharacter* ScoringCharacter, ACTFPlayerState* ScoringPlayerState, ACTFPlayerController* ScoringController)
+void ACTFGameMode::OnTeamScored(ACTFCharacter* ScoringCharacter, ACTFPlayerState* ScoringPlayerState, ACTFPlayerController* ScoringController)
 {	
 	if (ScoringCharacter == nullptr || ScoringPlayerState == nullptr || ScoringController == nullptr)
 		return;
@@ -256,7 +256,7 @@ void ACTFGameModeBase::OnTeamScored(ACTFCharacter* ScoringCharacter, ACTFPlayerS
 	CheckForGameEnd();
 }
 
-void ACTFGameModeBase::CheckForGameEnd()
+void ACTFGameMode::CheckForGameEnd()
 {
 	int32 Team1Score = 0;
 	int32 Team2Score = 0;

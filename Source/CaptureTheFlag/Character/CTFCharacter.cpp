@@ -248,7 +248,9 @@ void ACTFCharacter::WalkPressed()
 		Server_WalkPressed();
 	}
 	bWalking = true;
-	GetCharacterMovement()->MaxWalkSpeed = 220.f;
+	float WalkSpeed = GetCharacterMovement()->MaxWalkSpeedCrouched;
+	
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
 
 void ACTFCharacter::WalkReleased()
@@ -258,19 +260,21 @@ void ACTFCharacter::WalkReleased()
 		Server_WalkReleased();
 	}
 	bWalking = false;
-	GetCharacterMovement()->MaxWalkSpeed = 420.f;
+	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 }
 
 void ACTFCharacter::Server_WalkPressed_Implementation()
 {
 	bWalking = true;
-	GetCharacterMovement()->MaxWalkSpeed = 220.f;
+	
+	float WalkSpeed = GetCharacterMovement()->MaxWalkSpeedCrouched;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
 
 void ACTFCharacter::Server_WalkReleased_Implementation()
 {
 	bWalking = false;
-	GetCharacterMovement()->MaxWalkSpeed = 420.f;
+	GetCharacterMovement()->MaxWalkSpeed = 600.f;
 }
 
 void ACTFCharacter::Jump()
@@ -390,7 +394,7 @@ void ACTFCharacter::ReceiveDamage(AActor* DamagedActor, float Damage, const UDam
 		
 		CTFPlayerController = CTFPlayerController == nullptr ? Cast<ACTFPlayerController>(Controller) : CTFPlayerController;
 		ACTFPlayerController* AttackerController = Cast<ACTFPlayerController>(InstigatorController);
-		ACTFGameModeBase* CTFGameMode = GetWorld()->GetAuthGameMode<ACTFGameModeBase>();
+		ACTFGameMode* CTFGameMode = GetWorld()->GetAuthGameMode<ACTFGameMode>();
 		if(CTFGameMode)
 		{
 			if(AttackerController)
@@ -427,7 +431,7 @@ void ACTFCharacter::HandleTeamBaseOverlap(ACTFSpawnArea* TeamBase)
 	if (!TeamBase) return;
 	if (!HeldFlag) return;
 	
-	ACTFGameModeBase* CTFGameMode = GetWorld()->GetAuthGameMode<ACTFGameModeBase>();
+	ACTFGameMode* CTFGameMode = GetWorld()->GetAuthGameMode<ACTFGameMode>();
 	ACTFPlayerState* CTFPlayerState = Cast<ACTFPlayerState>(GetPlayerState());
 	CTFPlayerController = Cast<ACTFPlayerController>(GetController());
 

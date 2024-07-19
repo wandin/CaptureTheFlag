@@ -12,13 +12,13 @@
  * 
  */
 UCLASS()
-class CAPTURETHEFLAG_API ACTFGameModeBase : public AGameMode
+class CAPTURETHEFLAG_API ACTFGameMode : public AGameMode
 {
 	GENERATED_BODY()
 
 public:
 
-	ACTFGameModeBase();
+	ACTFGameMode();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void OnPostLogin(AController* NewPlayer) override;
 	void HandleTeamSelection(AController* PlayerController, int32 TeamID);

@@ -48,7 +48,7 @@ void ACTFWeapon::Fire()
 		if (UCameraComponent* Camera = GetOwner()->FindComponentByClass<UCameraComponent>())
 		{
 			ACTFCharacter* OwnerCharacter = Cast<ACTFCharacter>(GetOwner());
-			FVector StartLocation = OwnerCharacter->GetMesh()->GetBoneLocation(FName("head"));
+			FVector StartLocation = OwnerCharacter->GetMesh()->GetBoneLocation(FName("pelvis"));
 
 			// Mover o StartLocation um pouco à frente do personagem
 			FVector ForwardVector = Camera->GetForwardVector();
@@ -68,6 +68,8 @@ void ACTFWeapon::Fire()
 				Projectile->FireInDirection(ShootDirection);
 			}
 			Multicast_PlayFireEffects();
+
+			DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 2.f);
 		}
 	}
 }

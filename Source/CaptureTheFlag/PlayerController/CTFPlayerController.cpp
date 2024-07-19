@@ -52,7 +52,7 @@ void ACTFPlayerController::SelectTeam(int32 TeamID)
 
 void ACTFPlayerController::Server_SelectTeam_Implementation(int32 TeamID)
 {
-	if(ACTFGameModeBase* GM = Cast<ACTFGameModeBase>(GetWorld()->GetAuthGameMode()))
+	if(ACTFGameMode* GM = Cast<ACTFGameMode>(GetWorld()->GetAuthGameMode()))
 	{ 
 		GM->HandleTeamSelection(this, TeamID);
 	}
