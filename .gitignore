@@ -1,0 +1,23 @@
+# Directories
+Binaries/
+Build/
+Config/
+DerivedDataCache/
+Intermediate/
+Platforms/
+Saved/
+.idea/
+.vscode/
+.vs/
+
+# Files
+.vsconfig
+
+# Visual Studio temporary files
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.suo
+*.DotSettings.user
